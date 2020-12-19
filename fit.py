@@ -36,7 +36,7 @@ test_accuracy = model.score(X_test, y_test)
 table_accuracy = pd.DataFrame([
 				[train_accuracy],
 				[test_accuracy]],
-				['Training Accuracy', 'Test Accuracy'],	
+				['Train Accuracy', 'Test Accuracy'],	
 				['Linear Regression'])
 print(table_accuracy)
 
