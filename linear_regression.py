@@ -7,9 +7,10 @@ class LinearRegression():
 		self.n_iter = n_iter
 		self.n_samples = len(y)
 		self.n_features = np.size(X, 1)
-		self.eps = 1e-4
+		self.mean = np.mean(X, 0)
+		self.std = np.std(X, 0)
 		self.X = np.hstack((np.ones(
-			(self.n_samples, 1)), (X - np.mean(X, 0)) / (np.std(X, 0) + self.eps)))
+			(self.n_samples, 1)), (X - self.mean) / (self.std)))
 		self.y = y[:, np.newaxis]
 		self.params = np.zeros((self.n_features + 1, 1))
 		self.coef_ = None
@@ -29,8 +30,8 @@ class LinearRegression():
 	def predict(self, X):
 		
 		n_samples = np.size(X, 0)
-		y = np.hstack((np.ones((n_samples, 1)), (X-np.mean(X, 0)) \
-							/ (np.std(X, 0) + self.eps))) @ self.params
+		y = np.hstack((np.ones((n_samples, 1)), (X-self.mean) \
+							/ (self.std))) @ self.params
 		return y
 
 	def score(self, X=None, y=None):
@@ -40,7 +41,7 @@ class LinearRegression():
 		else:
 			n_samples = np.size(X, 0)
 			X = np.hstack((np.ones(
-				(n_samples, 1)), (X - np.mean(X, 0)) / (np.std(X, 0) + self.eps)))
+				(n_samples, 1)), (X - self.mean) / (self.std)))
 
 		if y is None:
 			y = self.y
